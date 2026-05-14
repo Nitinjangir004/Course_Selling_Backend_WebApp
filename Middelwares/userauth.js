@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET_KEY_USER;
 function userauth(req, res, next) {
     try {
         // Correct way to get token
-        const token  = req.header.token;
+        const token  = req.headers.token;
 
         if (!token) {
             return res.status(403).json({ message: "Access denied. No token provided." });

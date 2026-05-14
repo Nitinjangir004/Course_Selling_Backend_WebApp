@@ -43,7 +43,7 @@ const same_email= await  adminModel.findOne({email:email});
         email:email,
         password:hashpassword,
     })
-    res.json({ message: "User registered successfully!" });
+    res.json({ message: "Admin registered successfully!" });
 }
 catch (error) {
     console.error("Signup Error:", error); // Log the exact error
@@ -108,7 +108,7 @@ adminrouter.put("/course", adminauth ,async function(req,res){
 
 
 });
-adminrouter.get("/course/bulk",async function(req,res){
+adminrouter.get("/course/bulk", adminauth,async function(req,res){
     const Adminid = req.userid;
   const courses = await courseModel.find({
     createrid:Adminid

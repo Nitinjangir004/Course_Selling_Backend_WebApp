@@ -1,11 +1,12 @@
 const  jwt  = require("jsonwebtoken");
 require('dotenv').config();
-const JWT_SECRET = process.env.JWT_SECRET_ADMIN;
+const JWT_SECRET = process.env.JWT_SECRET_KEY_ADMIN;
 
 
-function adminauth(req,res,next){
-const token  = req.header.token;
-const response = jwt.verify(token,JWT_SECRET);
+async function adminauth(req,res,next){
+try {
+    const token  = req.headers.token;
+const response = await jwt.verify(token,JWT_SECRET);
 
 if(response){
     req.userid=response.id;
@@ -15,6 +16,13 @@ else{
     res.status(403).json({
         Message:"Incoorect crendtional"
     })
+}
+} catch (error) {
+ res.status(500).json(
+    {
+        "message":"admin auth error:-" ,error,
+    }
+ );   
 }
 }
 module.exports = adminauth

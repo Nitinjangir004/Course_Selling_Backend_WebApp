@@ -14,12 +14,18 @@ const course = await purchasesModel.create({
     });
 });
 
-Courserouter.get("/Preview",function(req,res){
-    const courses = courseModel.find({})
-    res.json({
-        message:"All Courses",
-        courses
-    });
+Courserouter.get("/Preview",async function(req,res){
+    try {
+        const courses = await courseModel.find({})
+        res.json({
+            message:"All Courses",
+            courses
+        });
+    } catch (error) {
+        res.status(500).json({
+            "message":"error in preview " ,error,
+        });
+    }
 });
 
 module.exports = Courserouter; 
